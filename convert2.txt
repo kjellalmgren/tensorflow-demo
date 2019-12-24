@@ -1,0 +1,35 @@
+TensorFlow 2.0 Upgrade Script
+-----------------------------
+Converted 1 files
+Detected 0 issues that require attention
+--------------------------------------------------------------------------------
+================================================================================
+Detailed log follows:
+
+================================================================================
+--------------------------------------------------------------------------------
+Processing file 'main.py'
+ outputting to 'main2.py'
+--------------------------------------------------------------------------------
+
+36:4: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+37:4: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+38:12: INFO: Renamed 'tf.placeholder' to 'tf.compat.v1.placeholder'
+42:22: INFO: Renamed 'tf.truncated_normal' to 'tf.random.truncated_normal'
+43:22: INFO: Renamed 'tf.truncated_normal' to 'tf.random.truncated_normal'
+44:22: INFO: Renamed 'tf.truncated_normal' to 'tf.random.truncated_normal'
+45:23: INFO: Renamed 'tf.truncated_normal' to 'tf.random.truncated_normal'
+58:13: INFO: Changing keep_prob arg of tf.nn.dropout to rate, and recomputing value.
+
+62:16: INFO: Added keywords to args of function 'tf.reduce_mean'
+63:4: INFO: Changing labels arg of tf.nn.softmax_cross_entropy_with_logits to tf.stop_gradient(labels). Please check this transformation.
+
+66:13: INFO: Renamed 'tf.train.AdamOptimizer' to 'tf.compat.v1.train.AdamOptimizer'
+70:24: INFO: Added keywords to args of function 'tf.argmax'
+70:52: INFO: Added keywords to args of function 'tf.argmax'
+71:11: INFO: Added keywords to args of function 'tf.reduce_mean'
+73:7: INFO: Renamed 'tf.global_variables_initializer' to 'tf.compat.v1.global_variables_initializer'
+74:7: INFO: Renamed 'tf.Session' to 'tf.compat.v1.Session'
+116:22: INFO: Added keywords to args of function 'tf.argmax'
+--------------------------------------------------------------------------------
+
