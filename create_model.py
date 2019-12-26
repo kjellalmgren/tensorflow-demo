@@ -36,6 +36,7 @@ def Reshape(trainX, trainY, testX, testY):
 	testY = to_categorical(testY)
 	return trainX, trainY, testX, testY
 
+# just to show pictures in the model
 def show_data(trainX, trainY, testX, testY):
 	# plot first few images
 	for i in range(9):
