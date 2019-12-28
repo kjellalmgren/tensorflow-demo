@@ -2,6 +2,7 @@
 from tensorflow.keras.preprocessing.image import load_img
 from tensorflow.keras.preprocessing.image import img_to_array
 from tensorflow.keras.models import load_model
+import matplotlib
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -54,6 +55,7 @@ def plot_image(i, predictions_array, true_label, img):
 	plt.yticks([])
 
 	plt.imshow(img, cmap=plt.cm.binary)
+	#plt.imshow(img)
 
 	predicted_label = np.argmax(predictions_array)
 	if predicted_label == true_label:
@@ -82,8 +84,21 @@ def run_code():
 	predictions = model.predict_classes(img)
 	digit = model.predict(img)
 	print("prediction is calculated to : ", predictions[0])
-	print(digit)
-    #
+	print("Array:", digit)
+	for names in class_names:
+		print("name: %s" % (names))
+	#
+	j = 0
+	sum = 0
+	#print("list %s" % (predictions[0].tolist()))
+	items = digit[0].tolist()
+	print(items)
+	for item in items:
+		print("index: {0:2d} - {1:10.8f} - {2:8.6%}".format(j, item, (item)))
+		j = j + 1
+		sum = sum + item
+	#
+	print("Sum: {:3.2f}".format(sum))
 	i = 0
 	plt.figure(figsize=(6,3))
 	plt.subplot(1,2,1)

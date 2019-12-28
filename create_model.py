@@ -1,7 +1,9 @@
 # example of loading the mnist dataset
 #import tensorflow as tf
 #from tensorflow import tensorflow as tf
-from numpy import mean, std
+#import tensorflow as tf
+from numpy import mean
+from numpy import std
 from tensorflow.keras.datasets import mnist
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential
@@ -140,7 +142,6 @@ def run_test_harness():
 	# save model
 	model.save('final_model.h5')
  
-
 #
 #############################	
 # entry point
