@@ -76,8 +76,8 @@ def run_code():
 
 	
 	# load the image
-	img = load_image('images/seven.png')
-	img1 = load_raw_image('images/seven.png')
+	img = load_image('images/seven-4.png')
+	img1 = load_raw_image('images/seven-4.png')
 	# load model
 	model = load_model('final_model.h5')
 	# predict the class
@@ -94,7 +94,7 @@ def run_code():
 	items = digit[0].tolist()
 	print(items)
 	for item in items:
-		print("index: {0:2d} - {1:10.8f} - {2:10.8s%}".format(j, item, (item)))
+		print("index: {0:2d} - {1:10.8f} - {2:10.8%}".format(j, item, (item)))
 		j = j + 1
 		sum = sum + item
 	#
