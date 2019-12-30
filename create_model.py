@@ -4,6 +4,7 @@
 #import tensorflow as tf
 from numpy import mean
 from numpy import std
+import tensorflow as tf
 from tensorflow.keras.datasets import mnist
 from tensorflow.keras.utils import to_categorical
 from tensorflow.keras.models import Sequential
@@ -19,8 +20,8 @@ from matplotlib import pyplot
 
 # load train and test dataset
 def load_dataset():
-	# load dataset
-	(trainX, trainY), (testX, testY) = mnist.load_data()
+	# load dataset from home/xavier/.keras/datasets/mnist.npz
+	(trainX, trainY), (testX, testY) = mnist.load_data(path='mnist.npz')
 	# reshape dataset to have a single channel, skip color
 	#trainX = trainX.reshape((trainX.shape[0], 28, 28, 1))
 	#testX = testX.reshape((testX.shape[0], 28, 28, 1))
@@ -120,6 +121,8 @@ def summarize_performance(scores):
 def run_test_harness():
 
 	#print("Tensorflow version: ", tf.__version__)
+	# eager execution
+	tf.executing_eagerly()
 	# load dataset
 	trainX, trainY, testX, testY = load_dataset()
 	# show data
@@ -132,13 +135,17 @@ def run_test_harness():
 	model = define_model()
 	# only needed when we should show digrams on screnn
 	# evaluate model
-	#scores, histories = evaluate_model(model, trainX, trainY)
+	scores, histories = evaluate_model(model, trainX, trainY)
 	# learning curves
-	#summarize_diagnostics(histories)
+	summarize_diagnostics(histories)
 	# summarize estimated performance
-	#summarize_performance(scores)
+	summarize_performance(scores)
 	# fit model
-	model.fit(trainX, trainY, epochs=10, batch_size=32, verbose=0)
+	model.fit(trainX, trainY, epochs=10, batch_size=32, validation_data=(testX, testY))
+	#
+	metrics = model.evaluate(testX, testY, verbose=0)
+	print("Metrics - (test loss and test accuracy)")
+	print(metrics)
 	# save model
 	model.save('final_model.h5')
  

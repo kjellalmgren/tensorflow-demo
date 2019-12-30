@@ -33,7 +33,7 @@ n_iterations = 1000
 batch_size = 128
 dropout = 0.5
 #
-X = tf.placeholder("float", [None, n_input])
+X = tensorflow.placeholder("float", [None, n_input])
 Y = tf.placeholder("float", [None, n_output])
 keep_prob = tf.placeholder(tf.float32)
 # KOA
