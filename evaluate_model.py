@@ -1,15 +1,16 @@
 # evaluate the deep model on the test dataset
 import tensorflow as tf
 #
-from keras.datasets import mnist
-from keras.models import load_model
-from keras.utils import to_categorical
+from tensorflow.keras.datasets import mnist
+from tensorflow.keras.models import load_model
+from tensorflow.keras.utils import to_categorical
 
 # load train and test dataset
 def load_dataset():
 	# load dataset
 	# load dataset from home/xavier/.keras/datasets/mnist.npz
 	(trainX, trainY), (testX, testY) = mnist.load_data(path='mnist.npz')
+	print("dataset (mnist.npz) has been loaded!")
 	# reshape dataset to have a single channel
 	trainX = trainX.reshape((trainX.shape[0], 28, 28, 1))
 	testX = testX.reshape((testX.shape[0], 28, 28, 1))
@@ -36,7 +37,7 @@ def run_test_harness():
 	# prepare pixel data
 	trainX, testX = prep_pixels(trainX, testX)
 	# load model
-	model = load_model('final_model.h5')
+	model = load_model('models/final_model.h5')
 	# evaluate model on test dataset
 	_, acc = model.evaluate(testX, testY, verbose=0)
 	print('> %.3f' % (acc * 100.0))

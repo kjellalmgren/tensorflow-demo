@@ -8,6 +8,7 @@ __pycache__/
 
 # Distribution / packaging
 /MNIST_data/
+/models/
 .vscode/
 .Python
 build/

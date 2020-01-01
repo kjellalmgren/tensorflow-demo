@@ -21,7 +21,8 @@ from matplotlib import pyplot
 # load train and test dataset
 def load_dataset():
 	# load dataset from home/xavier/.keras/datasets/mnist.npz
-	(trainX, trainY), (testX, testY) = mnist.load_data(path='mnist.npz')
+	path = 'mnist.npz'
+	(trainX, trainY), (testX, testY) = mnist.load_data(path)
 	# reshape dataset to have a single channel, skip color
 	#trainX = trainX.reshape((trainX.shape[0], 28, 28, 1))
 	#testX = testX.reshape((testX.shape[0], 28, 28, 1))
@@ -35,8 +36,10 @@ def Reshape(trainX, trainY, testX, testY):
 	trainX = trainX.reshape((trainX.shape[0], 28, 28, 1))
 	testX = testX.reshape((testX.shape[0], 28, 28, 1))
 	# one hot encode target values
-	trainY = to_categorical(trainY)
-	testY = to_categorical(testY)
+	# number of classes
+	number_of_classes = 10
+	trainY = to_categorical(trainY, number_of_classes)
+	testY = to_categorical(testY, number_of_classes)
 	return trainX, trainY, testX, testY
 
 # just to show pictures in the model
@@ -147,7 +150,7 @@ def run_test_harness():
 	print("Metrics - (test loss and test accuracy)")
 	print(metrics)
 	# save model
-	model.save('final_model.h5')
+	model.save('models/final_model.h5')
  
 #
 #############################	
