@@ -120,7 +120,8 @@ def summarize_performance(scores):
 	# box and whisker plots of results
 	pyplot.boxplot(scores)
 	pyplot.show()
-#
+
+# tun_test_harness
 def run_test_harness():
 
 	#print("Tensorflow version: ", tf.__version__)
