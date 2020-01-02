@@ -21,22 +21,25 @@ def load_images_to_data(image_label, image_directory, features_data, label_data)
     for file in list_of_files:
         image_file_name = os.path.join(image_directory, file)
         if ".png" in image_file_name:
+            print("processing {0:s}".format(image_file_name))
             img = Image.open(image_file_name).convert("L")
             img = np.resize(img, (28,28,1))
             im2arr = np.array(img)
-            im2arr = np.reshape(1,28,28,1)
+            im2arr = im2arr.reshape(1,28,28,1)
             features_data = np.append(features_data, im2arr, axis=0)
             label_data = np.append(label_data, [image_label], axis=0)
+            #print(features_data)
+            #print(label_data)
     return features_data, label_data
 
 # predict image
 def predict_image(model):
     #
-    print("Start predict image 1.png")
+    print("Start predict image 1-1.png")
     img = Image.open('data/mnist_data/validation/1/1-1.png').convert("L")
     img = np.resize(img, (28,28,1))
     im2arr = np.array(img)
-    #im2arr = im2arr.reshape(1,28,28,1)
+    im2arr = im2arr.reshape(1,28,28,1)
     #im2arr = im2arr.reshape(28,28,1)
     y_pred = model.predict_classes(im2arr)
     print(y_pred)
@@ -66,7 +69,7 @@ def compile_model(model):
 # fit model
 def fit_model(model):
     # Fit the model
-    model.fit(X_train, y_train, epochs=7, batch_size=200, validation_data=(X_test, y_test))
+    model.fit(X_train, y_train, epochs=10, batch_size=32, validation_data=(X_test, y_test))
     #model.fit(trainX, trainY, epochs=10, batch_size=32, validation_data=(testX, testY))
     metrics = model.evaluate(X_test, y_test, verbose=0)
     print("Metrics - (test loss and test accuracy)")
@@ -86,7 +89,7 @@ def run_training():
     model = compile_model(model)
     model = fit_model(model)
     save_model(model)
-    predict_image(model)
+    #predict_image(model)
 
 #############################	
 # entry point
@@ -101,8 +104,35 @@ number_of_classes = 10 # out classes
 X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], X_train.shape[2], 1).astype('float32')
 X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], X_test.shape[2], 1).astype('float32')
 #
+X_train, y_train = load_images_to_data('0', 'data/mnist_data/train/0', X_train, y_train)
+X_test, y_test = load_images_to_data('0', 'data/mnist_data/validation/0', X_test, y_test)
+#
 X_train, y_train = load_images_to_data('1', 'data/mnist_data/train/1', X_train, y_train)
 X_test, y_test = load_images_to_data('1', 'data/mnist_data/validation/1', X_test, y_test)
+#
+X_train, y_train = load_images_to_data('2', 'data/mnist_data/train/2', X_train, y_train)
+X_test, y_test = load_images_to_data('2', 'data/mnist_data/validation/2', X_test, y_test)
+#
+X_train, y_train = load_images_to_data('3', 'data/mnist_data/train/3', X_train, y_train)
+X_test, y_test = load_images_to_data('3', 'data/mnist_data/validation/3', X_test, y_test)
+#
+X_train, y_train = load_images_to_data('4', 'data/mnist_data/train/4', X_train, y_train)
+X_test, y_test = load_images_to_data('4', 'data/mnist_data/validation/4', X_test, y_test)
+#
+X_train, y_train = load_images_to_data('5', 'data/mnist_data/train/5', X_train, y_train)
+X_test, y_test = load_images_to_data('5', 'data/mnist_data/validation/5', X_test, y_test)
+#
+X_train, y_train = load_images_to_data('6', 'data/mnist_data/train/6', X_train, y_train)
+X_test, y_test = load_images_to_data('6', 'data/mnist_data/validation/6', X_test, y_test)
+#
+X_train, y_train = load_images_to_data('7', 'data/mnist_data/train/7', X_train, y_train)
+X_test, y_test = load_images_to_data('7', 'data/mnist_data/validation/7', X_test, y_test)
+#
+X_train, y_train = load_images_to_data('8', 'data/mnist_data/train/8', X_train, y_train)
+X_test, y_test = load_images_to_data('8', 'data/mnist_data/validation/8', X_test, y_test)
+#
+X_train, y_train = load_images_to_data('9', 'data/mnist_data/train/9', X_train, y_train)
+X_test, y_test = load_images_to_data('9', 'data/mnist_data/validation/9', X_test, y_test)
 #
 # normalize
 X_train/=255

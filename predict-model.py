@@ -91,7 +91,7 @@ def run_code():
 	img = load_image(filename)
 	img1 = load_raw_image(filename)
 	# load model
-	model = load_model('models/final_model.h5')
+	model = load_model('models/final_model1.h5')
 	# predict the class
 	predictions = model.predict_classes(img)
 	digit = model.predict(img)
@@ -128,5 +128,5 @@ def run_code():
 class_names = ['zero', 'one', 'two', 'three', 'four',
     'five', 'six', 'seven', 'eight', 'nine']
 test_labels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-filename = 'images/two-5.png'
+filename = 'images/four-5.png'
 run_code()
