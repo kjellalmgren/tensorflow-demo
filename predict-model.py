@@ -8,6 +8,8 @@ import matplotlib
 import matplotlib.pyplot as plt
 import matplotlib.image as pyimg
 import numpy as np
+import argparse
+import os
 
 
 # load and prepare the image
@@ -88,10 +90,11 @@ def plot_image(i, predictions_array, true_label, img):
 def run_code():
 
 	# load the image
-	img = load_image(filename)
-	img1 = load_raw_image(filename)
+	img = load_image('images/' + IMAGE_NAME)
+	img1 = load_raw_image('images/' + IMAGE_NAME)
 	# load model
-	model = load_model('models/final_model1.h5')
+	print(MODEL_NAME)
+	model = load_model('models/' + MODEL_NAME)
 	# predict the class
 	predictions = model.predict_classes(img)
 	digit = model.predict(img)
@@ -128,5 +131,18 @@ def run_code():
 class_names = ['zero', 'one', 'two', 'three', 'four',
     'five', 'six', 'seven', 'eight', 'nine']
 test_labels = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-filename = 'images/four-5.png'
+
+#define and parse input arguments
+parser = argparse.ArgumentParser()
+parser.add_argument('--model', help='Point to model-file to use', required=True)
+parser.add_argument('--image', help='Name of file to use for prediction', required=True)
+
+args = parser.parse_args()
+#
+MODEL_NAME = args.model
+IMAGE_NAME = args.image
+#
+filename = 'images/' + IMAGE_NAME
+print(filename)
+print(MODEL_NAME)
 run_code()
