@@ -1,5 +1,6 @@
 import tensorflow as tf
-
+from numpy import mean
+from numpy import std
 from tensorflow.keras.datasets import mnist
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
@@ -11,6 +12,7 @@ from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.utils import to_categorical
 #from tensorflow.keras.utils import np_utils
 from PIL import Image
+from matplotlib import pyplot
 import numpy as np
 import os
 
@@ -63,18 +65,49 @@ def create_model(number_of_classes):
 # compile model
 def compile_model(model):
     # Compile model
-    model.compile(loss='categorical_crossentropy', optimizer=Adam(), metrics=['accuracy'])
+    #model.compile(loss='categorical_crossentropy', optimizer=Adam(), metrics=['accuracy'])
+    model.compile(loss='categorical_crossentropy', optimizer="rmsprop",  metrics=['accuracy'])
     return model
 
 # fit model
 def fit_model(model):
     # Fit the model
-    model.fit(X_train, y_train, epochs=10, batch_size=32, validation_data=(X_test, y_test))
+    scores, histories = list(), list()
+    history = model.fit(X_train, y_train, epochs=10, batch_size=32, validation_data=(X_test, y_test))
     #model.fit(trainX, trainY, epochs=10, batch_size=32, validation_data=(testX, testY))
     metrics = model.evaluate(X_test, y_test, verbose=0)
     print("Metrics - (test loss and test accuracy)")
     print(metrics)
-    return model
+    # evaluate model
+    _, acc = model.evaluate(X_test, y_test, verbose=0)
+    print('> %.3f' % (acc * 100.0))
+	# stores scores
+    scores.append(acc)
+    histories.append(history)
+    return model, scores, histories
+
+# plot diagnostic learning curves
+def summarize_diagnostics(histories):
+	for i in range(len(histories)):
+		# plot loss
+		pyplot.subplot(211)
+		pyplot.title('Cross Entropy Loss')
+		pyplot.plot(histories[i].history['loss'], color='blue', label='train')
+		pyplot.plot(histories[i].history['val_loss'], color='orange', label='test')
+		# plot accuracy
+		pyplot.subplot(212)
+		pyplot.title('Classification Accuracy')
+		pyplot.plot(histories[i].history['accuracy'], color='blue', label='train')
+		pyplot.plot(histories[i].history['val_accuracy'], color='orange', label='test')
+	pyplot.show()
+ 
+# summarize model performance
+def summarize_performance(scores):
+	# print summary
+	print('Accuracy: mean=%.3f std=%.3f, n=%d' % (mean(scores)*100, std(scores)*100, len(scores)))
+	# box and whisker plots of results
+	pyplot.boxplot(scores)
+	pyplot.show()
 
 # save model
 def save_model(model):
@@ -87,7 +120,11 @@ def run_training():
     number_of_classes = 10 # out classes
     model = create_model(number_of_classes)
     model = compile_model(model)
-    model = fit_model(model)
+    model, scores, histories = fit_model(model)
+    summarize_diagnostics(histories)
+	# summarize estimated performance
+    summarize_performance(scores)
+    #
     save_model(model)
     #predict_image(model)
 
