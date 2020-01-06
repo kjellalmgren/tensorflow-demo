@@ -30,21 +30,10 @@ def load_images_to_data(image_label, image_directory, features_data, label_data)
             im2arr = im2arr.reshape(1,28,28,1)
             features_data = np.append(features_data, im2arr, axis=0)
             label_data = np.append(label_data, [image_label], axis=0)
+            print(file)
             #print(features_data)
             #print(label_data)
     return features_data, label_data
-
-# predict image
-def predict_image(model):
-    #
-    print("Start predict image 1-1.png")
-    img = Image.open('data/mnist_data/validation/1/1-1.png').convert("L")
-    img = np.resize(img, (28,28,1))
-    im2arr = np.array(img)
-    im2arr = im2arr.reshape(1,28,28,1)
-    #im2arr = im2arr.reshape(28,28,1)
-    y_pred = model.predict_classes(im2arr)
-    print(y_pred)
 
 
 # create model()
@@ -66,18 +55,15 @@ def create_model(number_of_classes):
 def compile_model(model):
     # Compile model
     #model.compile(loss='categorical_crossentropy', optimizer=Adam(), metrics=['accuracy'])
-    model.compile(loss='categorical_crossentropy', optimizer="rmsprop",  metrics=['accuracy'])
+    model.compile(loss='categorical_crossentropy', optimizer=Adam(),  metrics=['accuracy'])
     return model
 
 # fit model
 def fit_model(model):
     # Fit the model
     scores, histories = list(), list()
-    history = model.fit(X_train, y_train, epochs=10, batch_size=32, validation_data=(X_test, y_test))
+    history = model.fit(X_train, y_train, epochs=25, batch_size=200, validation_data=(X_test, y_test))
     #model.fit(trainX, trainY, epochs=10, batch_size=32, validation_data=(testX, testY))
-    metrics = model.evaluate(X_test, y_test, verbose=0)
-    print("Metrics - (test loss and test accuracy)")
-    print(metrics)
     # evaluate model
     _, acc = model.evaluate(X_test, y_test, verbose=0)
     print('> %.3f' % (acc * 100.0))
@@ -88,19 +74,19 @@ def fit_model(model):
 
 # plot diagnostic learning curves
 def summarize_diagnostics(histories):
-	for i in range(len(histories)):
+    for i in range(len(histories)):
 		# plot loss
-		pyplot.subplot(211)
-		pyplot.title('Cross Entropy Loss')
-		pyplot.plot(histories[i].history['loss'], color='blue', label='train')
-		pyplot.plot(histories[i].history['val_loss'], color='orange', label='test')
+        pyplot.subplot(211)
+        pyplot.title('Cross Entropy Loss')
+        pyplot.plot(histories[i].history['loss'], color='blue', label='training')
+        pyplot.plot(histories[i].history['val_loss'], color='orange', label='testing')
 		# plot accuracy
-		pyplot.subplot(212)
-		pyplot.title('Classification Accuracy')
-		pyplot.plot(histories[i].history['accuracy'], color='blue', label='train')
-		pyplot.plot(histories[i].history['val_accuracy'], color='orange', label='test')
-	pyplot.show()
- 
+        pyplot.subplot(212)
+        pyplot.title('Classification Accuracy')
+        pyplot.plot(histories[i].history['accuracy'], color='blue', label='training')
+        pyplot.plot(histories[i].history['val_accuracy'], color='orange', label='testing')
+    pyplot.show()
+
 # summarize model performance
 def summarize_performance(scores):
 	# print summary
@@ -170,8 +156,7 @@ X_test, y_test = load_images_to_data('8', 'data/mnist_data/validation/8', X_test
 #
 X_train, y_train = load_images_to_data('9', 'data/mnist_data/train/9', X_train, y_train)
 X_test, y_test = load_images_to_data('9', 'data/mnist_data/validation/9', X_test, y_test)
-#
-# normalize
+# Normalize
 X_train/=255
 X_test/=255
 #
