@@ -13,6 +13,7 @@ from tensorflow.keras.utils import to_categorical
 #from tensorflow.keras.utils import np_utils
 from PIL import Image
 from matplotlib import pyplot
+import matplotlib.patches as mpatches
 import numpy as np
 import os
 
@@ -62,7 +63,7 @@ def compile_model(model):
 def fit_model(model):
     # Fit the model
     scores, histories = list(), list()
-    history = model.fit(X_train, y_train, epochs=25, batch_size=200, validation_data=(X_test, y_test))
+    history = model.fit(X_train, y_train, epochs=50, batch_size=200, validation_data=(X_test, y_test))
     #model.fit(trainX, trainY, epochs=10, batch_size=32, validation_data=(testX, testY))
     # evaluate model
     _, acc = model.evaluate(X_test, y_test, verbose=0)
@@ -78,13 +79,19 @@ def summarize_diagnostics(histories):
 		# plot loss
         pyplot.subplot(211)
         pyplot.title('Cross Entropy Loss')
-        pyplot.plot(histories[i].history['loss'], color='blue', label='training')
-        pyplot.plot(histories[i].history['val_loss'], color='orange', label='testing')
+        blue_patch = mpatches.Patch(color='blue', label='traning data')
+        orange_patch = mpatches.Patch(color='orange', label='testing data')
+        pyplot.plot(histories[i].history['loss'], color='blue', label='training data')
+        pyplot.plot(histories[i].history['val_loss'], color='orange', label='testing data')
+        pyplot.legend(handles=[blue_patch, orange_patch])
 		# plot accuracy
         pyplot.subplot(212)
         pyplot.title('Classification Accuracy')
-        pyplot.plot(histories[i].history['accuracy'], color='blue', label='training')
-        pyplot.plot(histories[i].history['val_accuracy'], color='orange', label='testing')
+        blue_patch = mpatches.Patch(color='blue', label='traning data')
+        orange_patch = mpatches.Patch(color='orange', label='testing data')
+        pyplot.plot(histories[i].history['accuracy'], color='blue', label='training data')
+        pyplot.plot(histories[i].history['val_accuracy'], color='orange', label='testing data')
+        pyplot.legend(handles=[blue_patch, orange_patch])
     pyplot.show()
 
 # summarize model performance
@@ -126,6 +133,9 @@ number_of_classes = 10 # out classes
 # Reshaping to format which CNN expects (batch, height, width, channels)
 X_train = X_train.reshape(X_train.shape[0], X_train.shape[1], X_train.shape[2], 1).astype('float32')
 X_test = X_test.reshape(X_test.shape[0], X_test.shape[1], X_test.shape[2], 1).astype('float32')
+# Normalize
+X_train/=255
+X_test/=255
 #
 X_train, y_train = load_images_to_data('0', 'data/mnist_data/train/0', X_train, y_train)
 X_test, y_test = load_images_to_data('0', 'data/mnist_data/validation/0', X_test, y_test)
