@@ -31,10 +31,14 @@ def load_dataset():
 	#testY = to_categorical(testY)
 	return trainX, trainY, testX, testY
 
+# reshape model
 def Reshape(trainX, trainY, testX, testY):
 	# reshape dataset to have a single channel, skip color
 	trainX = trainX.reshape((trainX.shape[0], 28, 28, 1))
 	testX = testX.reshape((testX.shape[0], 28, 28, 1))
+	# Normalize
+    X_train/=255
+    X_test/=255
 	# one hot encode target values
 	# number of classes
 	number_of_classes = 10
@@ -145,7 +149,7 @@ def run_test_harness():
 	# summarize estimated performance
 	summarize_performance(scores)
 	# fit model
-	model.fit(trainX, trainY, epochs=10, batch_size=32, validation_data=(testX, testY))
+	model.fit(trainX, trainY, epochs=25, batch_size=32, validation_data=(testX, testY))
 	#
 	metrics = model.evaluate(testX, testY, verbose=0)
 	print("Metrics - (test loss and test accuracy)")

@@ -127,7 +127,9 @@ def run_training():
 print("Start training data...")
 number_of_classes = 10 # out classes
 # load data, Let’s load the Keras MNIST dataset first
-(X_train, y_train), (X_test, y_test) = mnist.load_data()
+# load dataset from home/xavier/.keras/datasets/mnist.npz
+path = 'mnist.npz'
+(X_train, y_train), (X_test, y_test) = mnist.load_data(path)
 #
 # Now let’s reshape the data according to CNN expectations
 # Reshaping to format which CNN expects (batch, height, width, channels)
