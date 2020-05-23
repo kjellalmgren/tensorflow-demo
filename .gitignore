@@ -8,7 +8,6 @@ __pycache__/
 
 # Distribution / packaging
 /MNIST_data/
-/models/
 .vscode/
 .Python
 build/
@@ -30,7 +29,6 @@ share/python-wheels/
 *.egg
 MANIFEST
 /tensorflow-env/
-*.h5
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
