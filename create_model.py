@@ -37,8 +37,8 @@ def Reshape(trainX, trainY, testX, testY):
 	trainX = trainX.reshape((trainX.shape[0], 28, 28, 1))
 	testX = testX.reshape((testX.shape[0], 28, 28, 1))
 	# Normalize
-    X_train/=255
-    X_test/=255
+    #X_train /= 255
+    # X_test /= 255
 	# one hot encode target values
 	# number of classes
 	number_of_classes = 10
@@ -155,7 +155,7 @@ def run_test_harness():
 	print("Metrics - (test loss and test accuracy)")
 	print(metrics)
 	# save model
-	model.save('models/final_model.h5')
+	model.save('models/final_model2.h5')
  
 #
 #############################	

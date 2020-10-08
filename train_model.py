@@ -9,7 +9,7 @@ from tensorflow.keras.layers import Conv2D
 from tensorflow.keras.layers import MaxPooling2D
 from tensorflow.keras.optimizers import Adam
 from tensorflow.keras.utils import to_categorical
-from tensorflow.keras.utils import np_utils
+from tensorflow.keras import utils
 from PIL import Image
 import numpy as np
 import os
@@ -80,7 +80,7 @@ def fit_model(model):
     # Fit the model
     model.fit(X_train, y_train, epochs=7, batch_size=200, validation_data=(X_test, y_test))
     #model.fit(trainX, trainY, epochs=10, batch_size=32, validation_data=(testX, testY))
-    metrics = model.evaluate(X_test, y_test, verbose=0)
+    metrics = model.evaluate(X_test, y_test, verbose=1)
     print("Metrics - (test loss and test accuracy)")
     print(metrics)
     return model
@@ -88,7 +88,7 @@ def fit_model(model):
 # save model
 def save_model(model):
     # save model
-	model.save('models/final_model1.h5')
+	model.save('models/final_model2.h5')
 
 # entry point, run training
 def run_training():
@@ -98,7 +98,7 @@ def run_training():
     encode(number_of_classes, y_train, y_test)
     model = create_model(number_of_classes)
     model = compile_model(model)
-    model = fit_model(model)
+    #model = fit_model(model)
     save_model(model)
 
 #############################	

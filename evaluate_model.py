@@ -37,9 +37,9 @@ def run_test_harness():
 	# prepare pixel data
 	trainX, testX = prep_pixels(trainX, testX)
 	# load model
-	model = load_model('models/final_model.h5')
+	model = load_model('models/final_model1.h5')
 	# evaluate model on test dataset
-	_, acc = model.evaluate(testX, testY, verbose=0)
+	_, acc = model.evaluate(testX, testY, verbose=1)
 	print('> %.3f' % (acc * 100.0))
 
 # entry point, run the test harness
